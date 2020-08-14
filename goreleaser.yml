@@ -1,0 +1,10 @@
+builds:
+  - main: .
+    binary: srv-updater
+    goos:
+      - darwin
+      - linux
+    goarch:
+      - amd64
+      - arm64
+      - arm
