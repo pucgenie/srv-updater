@@ -26,7 +26,7 @@ The SRV updater uses raw sockets. Therefore It needs root privilege or `CAP_NET_
   -fqdn string
     	the hostname of the record you want to update (default "_service._tcp.example.com")
   -interval duration
-    	sending interval (default 1m)
+    	sending interval (default 28s)
   -key string
     	private key (default "~/.ssh/id_ed25519")
   -priority uint

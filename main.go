@@ -20,7 +20,7 @@ func main() {
 	flag.UintVar(&packet.Priority, "priority", 10, "the priority of the record you want to update")
 	flag.UintVar(&packet.Weight, "weight", 1, "the weight of the record you want to update")
 
-	interval := flag.Duration("interval", time.Minute, "sending interval")
+	interval := flag.Duration("interval", time.Second*28, "sending interval")
 	keyPath := flag.String("key", "~/.ssh/id_ed25519", "private key")
 	dstPort := flag.Int("dst-port", 55, "the destination port")
 	dstHost := flag.String("dst-host", "dynv6.com", "the destination host")
