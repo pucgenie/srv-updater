@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net"
@@ -29,6 +30,10 @@ func defaultIP() string {
 	defer conn.Close()
 
 	return conn.LocalAddr().(*net.UDPAddr).IP.String()
+}
+
+func lookupIP(host string) ([]net.IP, error) {
+	return net.DefaultResolver.LookupIP(context.Background(), "ip4", host)
 }
 
 func buildUDPPacket(dst, src net.UDPAddr, payload []byte) ([]byte, error) {

@@ -53,8 +53,7 @@ func main() {
 	// Parse local IP address
 	srcIP := net.ParseIP(*ip)
 
-	// Resolve destination host
-	dstIP, err := net.ResolveIPAddr("ip", *dstHost)
+	dstIPs, err := lookupIP(*dstHost)
 	if err != nil {
 		log.Panicln("unable to resolve destination host:", err)
 	}
@@ -70,29 +69,26 @@ func main() {
 		IP:   srcIP,
 		Port: *srcPort,
 	}
-	dstAddr := net.UDPAddr{
-		IP:   dstIP.IP,
-		Port: *dstPort,
-	}
 
-	// send packet method
-	sendPacket := func() {
+	// send packets
+	for i := 0; ; i++ {
+		dstAddr := net.UDPAddr{
+			IP:   dstIPs[i%len(dstIPs)],
+			Port: *dstPort,
+		}
+
 		log.Printf("sending from %s to %s", srcAddr.String(), dstAddr.String())
 		b, err := buildUDPPacket(dstAddr, srcAddr, payload)
 		if err != nil {
 			panic(err)
 		}
 
-		_, err = conn.WriteTo(b, &net.IPAddr{IP: dstIP.IP})
+		_, err = conn.WriteTo(b, &net.IPAddr{IP: dstAddr.IP})
 		if err != nil {
 			log.Println(err)
 		}
-	}
 
-	// start sending packets
-	sendPacket()
-	for range time.NewTicker(*interval).C {
-		sendPacket()
+		time.Sleep(*interval)
 	}
 }
 
