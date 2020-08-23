@@ -1,20 +1,20 @@
 dynv6 SRV Updater
 =================
 
-This program sends signed UDP packets to dynv6 to keep the port of SRV records up to date.
+This program sends signed UDP datagrams to dynv6 to keep the port of SRV records up to date.
 It only works with ed25519 keys.
 
 ## Installation
 
     go get github.com/dynv6/srv-updater
 
-If you don't have a ed25519 key, generate one:
+If you don't have an ed25519 key, generate one:
 
     openssh-keygen -t ed25519
 
 ## Usage
 
-The SRV updater uses raw sockets. Therefore It needs root privilege or `CAP_NET_RAW` capability.
+The SRV updater uses raw sockets. Therefore it needs root privilege or `CAP_NET_RAW` capability.
 
 ### Command line arguments
 
@@ -41,5 +41,9 @@ The SRV updater uses raw sockets. Therefore It needs root privilege or `CAP_NET_
 
 ## Debugging
 
-If the server does not understand the packet, it responds with a UDP packet containing an error message.
+If the server does not understand the packet, it responds with a UDP datagram containing an error message.
 You can read it with network protocol analyzers like tcpdump or wireshark.
+
+## Technical limitations
+
+It won't work for network links where the MTU is tiny (say, less than 500 bytes) - the exact minimum limit depends on your SRV resource record name, though.
