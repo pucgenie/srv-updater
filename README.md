@@ -41,8 +41,8 @@ The SRV updater uses raw sockets. Therefore it needs root privilege or `CAP_NET_
 
 ## Debugging
 
-If the server does not understand the packet, it responds with a UDP datagram containing an error message.
-You can read it with network protocol analyzers like tcpdump or wireshark.
+If the server does not understand the datagram, it responds with a UDP datagram containing an error message.
+You can read it using network protocol analyzers like tcpdump or wireshark.
 
 ## Technical limitations
 
